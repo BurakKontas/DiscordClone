@@ -1,4 +1,4 @@
-﻿using DiscordClone.LoadBalancer.Infrastructure;
+﻿using DiscordClone.CenterService.Infrastructure;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);

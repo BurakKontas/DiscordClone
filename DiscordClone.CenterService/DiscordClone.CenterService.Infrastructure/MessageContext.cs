@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Net.Client;
-using DiscordClone.LoadBalander.Infrastructure;
 using Grpc.Core.Interceptors;
-using DiscordClone.LoadBalancer.Infrastructure.Interceptors;
+using DiscordClone.CenterService.Infrastructure.Interceptors;
 using Serilog;
 
 
 
-namespace DiscordClone.LoadBalancer.Infrastructure
+namespace DiscordClone.CenterService.Infrastructure
 {
     public class MessageContext
     {
@@ -23,7 +22,7 @@ namespace DiscordClone.LoadBalancer.Infrastructure
         public MessageContext(ILogger logger)
         {
             _logger = logger.ForContext<MessageContext>();
-            var channel = GrpcChannel.ForAddress("http://172.23.32.1:32775/");
+            var channel = GrpcChannel.ForAddress("http://172.23.32.1:32770/");
             var invoker = channel
                 .Intercept(new LoggingInterceptor(this));
             Client = new Greeter.GreeterClient(invoker);

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscordClone.LoadBalancer.Infrastructure.Interceptors
+namespace DiscordClone.CenterService.Infrastructure.Interceptors
 {
     public class LoggingInterceptor(MessageContext messageContext) : Interceptor
     {

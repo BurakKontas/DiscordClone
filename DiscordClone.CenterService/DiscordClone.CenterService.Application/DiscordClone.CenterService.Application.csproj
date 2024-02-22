@@ -19,10 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DiscordClone.LoadBalancer.DataAccess\DiscordClone.LoadBalancer.DataAccess.csproj" />
-    <ProjectReference Include="..\DiscordClone.LoadBalancer.Infrastructure\DiscordClone.LoadBalancer.Infrastructure.csproj" />
-    <ProjectReference Include="..\DiscordClone.LoadBalancer.Service\DiscordClone.LoadBalancer.Service.csproj" />
-    <ProjectReference Include="..\DiscordClone.LoadBalaner.Core\DiscordClone.LoadBalaner.Domain.csproj" />
+    <ProjectReference Include="..\DiscordClone.CenterService.DataAccess\DiscordClone.CenterService.DataAccess.csproj" />
+    <ProjectReference Include="..\DiscordClone.CenterService.Domain\DiscordClone.CenterService.Domain.csproj" />
+    <ProjectReference Include="..\DiscordClone.CenterService.Infrastructure\DiscordClone.CenterService.Infrastructure.csproj" />
+    <ProjectReference Include="..\DiscordClone.CenterService.Service\DiscordClone.CenterService.Service.csproj" />
   </ItemGroup>
 
 </Project>

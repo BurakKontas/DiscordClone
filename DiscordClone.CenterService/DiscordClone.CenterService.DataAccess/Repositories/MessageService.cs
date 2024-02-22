@@ -1,12 +1,12 @@
-﻿using DiscordClone.LoadBalancer.DataAccess.Contracts;
-using DiscordClone.LoadBalander.Infrastructure;
+﻿using DiscordClone.CenterService.DataAccess.Contracts;
+using DiscordClone.CenterService.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscordClone.LoadBalancer.DataAccess.Repositories
+namespace DiscordClone.CenterService.DataAccess.Repositories
 {
     public class MessageService : IMessageService
     {

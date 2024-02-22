@@ -1,9 +1,8 @@
-using DiscordClone.LoadBalancer.Infrastructure;
-using DiscordClone.LoadBalander.Infrastructure;
-using DiscordClone.LoadBalaner.Core.Models;
+using DiscordClone.CenterService.Domain.Models;
+using DiscordClone.CenterService.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DiscordClone.LoadBalancer.Application.Controllers
+namespace DiscordClone.CenterService.Application.Controllers
 {
     [ApiController]
     [Route("[controller]")]

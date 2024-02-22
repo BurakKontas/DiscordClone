@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscordClone.LoadBalaner.Core.Models
+namespace DiscordClone.CenterService.Domain.Models
 {
     public class Response<T>
     {
