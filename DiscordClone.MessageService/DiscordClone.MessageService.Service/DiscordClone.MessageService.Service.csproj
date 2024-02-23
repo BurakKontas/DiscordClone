@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DiscordClone.MessageService.DataAccess\DiscordClone.MessageService.DataAccess.csproj" />
+    <ProjectReference Include="..\DiscordClone.MessageService.Domain\DiscordClone.MessageService.Domain.csproj" />
+    <ProjectReference Include="..\DiscordClone.MessageService.Infrastructure\DiscordClone.MessageService.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

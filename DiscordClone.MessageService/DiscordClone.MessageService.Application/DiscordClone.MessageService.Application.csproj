@@ -13,8 +13,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CData.Cassandra.EntityFrameworkCore" Version="23.0.8770" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
+    <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.61.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DiscordClone.MessageService.DataAccess\DiscordClone.MessageService.DataAccess.csproj" />
+    <ProjectReference Include="..\DiscordClone.MessageService.Domain\DiscordClone.MessageService.Domain.csproj" />
+    <ProjectReference Include="..\DiscordClone.MessageService.Infrastructure\DiscordClone.MessageService.Infrastructure.csproj" />
+    <ProjectReference Include="..\DiscordClone.MessageService.Service\DiscordClone.MessageService.Service.csproj" />
   </ItemGroup>
 
 </Project>
