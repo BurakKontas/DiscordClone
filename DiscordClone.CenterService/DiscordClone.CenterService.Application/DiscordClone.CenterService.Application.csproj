@@ -26,4 +26,8 @@
     <ProjectReference Include="..\DiscordClone.CenterService.Service\DiscordClone.CenterService.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Notifications\" />
+  </ItemGroup>
+
 </Project>

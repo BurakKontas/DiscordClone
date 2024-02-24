@@ -23,7 +23,14 @@ namespace DiscordClone.MessageService.Infrastructure
                              .WithPort(port)
                              .Build();
 
-            _session = _cluster.Connect(keyspace);
+            try
+            {
+                _session = _cluster.Connect(keyspace);
+            } 
+            catch (Exception ex)
+            {
+                throw new Exception($"Error connecting to Cassandra: {ex.Message}");
+            }
         }
 
         public void Dispose()

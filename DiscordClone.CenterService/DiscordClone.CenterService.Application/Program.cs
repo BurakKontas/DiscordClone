@@ -1,6 +1,8 @@
-﻿using DiscordClone.CenterService.Infrastructure;
+﻿using DiscordClone.CenterService.Application.Behaviors;
+using DiscordClone.CenterService.Infrastructure;
 using DiscordClone.CenterService.Service.Contracts;
 using DiscordClone.CenterService.Service.Services;
+using MediatR;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +18,9 @@ Log.Logger = new LoggerConfiguration()
 builder.Services.AddSingleton(Log.Logger);
 builder.Services.AddScoped<MessageContext>();
 builder.Services.AddScoped<IMessageService, CenterService>();
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(ErrorHandlingAndLoggingBehavior<,>));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
