@@ -17,5 +17,6 @@ namespace DiscordClone.MessageService.DataAccess.Contracts
         Task<IEnumerable<Message>> GetByUser(Guid userId);
         Task<IEnumerable<Message>> GetByChannel(Guid channelId);
         Task<IEnumerable<Message>> GetByChannel(Guid channelId, DateTime startTime, DateTime endTime);
+        Task<bool> MessageExists(Guid messageId);
     }
 }

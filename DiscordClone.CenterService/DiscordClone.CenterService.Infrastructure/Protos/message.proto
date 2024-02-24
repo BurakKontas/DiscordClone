@@ -1,0 +1,127 @@
+syntax = "proto3";
+
+option csharp_namespace = "DiscordClone.CenterService.Infrastructure";
+
+package messageproto;
+
+// The message service definition.
+service MessageProtoService {
+  // Adds a new message
+  rpc AddMessage (AddMessageRequest) returns (AddMessageReply);
+
+  // Deletes a message
+  rpc DeleteMessage (DeleteMessageRequest) returns (DeleteMessageReply);
+
+  // Updates an existing message
+  rpc UpdateMessage (UpdateMessageRequest) returns (UpdateMessageReply);
+
+  // Retrieves a message by its ID
+  rpc GetMessage (GetMessageRequest) returns (GetMessageReply);
+
+  // Retrieves all messages
+  rpc GetMessages (GetMessagesRequest) returns (GetMessagesReply);
+
+  // Retrieves messages by user ID
+  rpc GetMessagesByUser (GetMessagesByUserRequest) returns (GetMessagesByUserReply);
+
+  // Retrieves messages by channel ID
+  rpc GetMessagesByChannel (GetMessagesByChannelRequest) returns (GetMessagesByChannelReply);
+
+  // Retrieves messages by channel ID and time range
+  rpc GetMessagesByChannelAndTimeRange (GetMessagesByChannelAndTimeRangeRequest) returns (GetMessagesByChannelAndTimeRangeReply);
+}
+
+// Request message for adding a message
+message AddMessageRequest {
+  string content = 1;
+  string userId = 2;
+  string channelId = 3;
+}
+
+// Response message for adding a message
+message AddMessageReply {
+  MessageProto message = 1;
+}
+
+// Request message for deleting a message
+message DeleteMessageRequest {
+  string messageId = 1;
+}
+
+// Response message for deleting a message
+message DeleteMessageReply {
+  string messageId = 1;
+  bool isSuccess = 2;
+}
+
+// Request message for updating a message
+message UpdateMessageRequest {
+  string messageId = 1;
+  string userId = 2;
+  string content = 3;
+}
+
+// Response message for updating a message
+message UpdateMessageReply {
+  MessageProto message = 1;
+}
+
+// Request message for retrieving a message
+message GetMessageRequest {
+  string messageId = 1;
+}
+
+// Response message for retrieving a message
+message GetMessageReply {
+  MessageProto message = 1;
+}
+
+// Request message for retrieving all messages
+message GetMessagesRequest {}
+
+// Response message for retrieving all messages
+message GetMessagesReply {
+  repeated MessageProto messages = 1;
+}
+
+// Request message for retrieving messages by user ID
+message GetMessagesByUserRequest {
+  string userId = 1;
+}
+
+// Response message for retrieving messages by user ID
+message GetMessagesByUserReply {
+  repeated MessageProto messages = 1;
+}
+
+// Request message for retrieving messages by channel ID
+message GetMessagesByChannelRequest {
+  string channelId = 1;
+}
+
+// Response message for retrieving messages by channel ID
+message GetMessagesByChannelReply {
+  repeated MessageProto messages = 1;
+}
+
+// Request message for retrieving messages by channel ID and time range
+message GetMessagesByChannelAndTimeRangeRequest {
+  string channelId = 1;
+  string startTime = 2;
+  string endTime = 3;
+}
+
+// Response message for retrieving messages by channel ID and time range
+message GetMessagesByChannelAndTimeRangeReply {
+  repeated MessageProto messages = 1;
+}
+
+// MessageProto definition
+message MessageProto {
+  string messageId = 1;
+  string content = 2;
+  string userId = 3;
+  string channelId = 4;
+  string createdAt = 5;
+  string updatedAt = 6;
+}

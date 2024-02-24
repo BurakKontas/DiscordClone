@@ -15,17 +15,17 @@ namespace DiscordClone.CenterService.Infrastructure
 {
     public class MessageContext
     {
-        public Greeter.GreeterClient Client { get; set; }
+        public MessageProtoService.MessageProtoServiceClient Client { get; set; }
         private readonly ILogger _logger;
 
 
         public MessageContext(ILogger logger)
         {
             _logger = logger.ForContext<MessageContext>();
-            var channel = GrpcChannel.ForAddress("http://172.23.32.1:32770/");
+            var channel = GrpcChannel.ForAddress("http://172.23.32.1:32777/");
             var invoker = channel
                 .Intercept(new LoggingInterceptor(this));
-            Client = new Greeter.GreeterClient(invoker);
+            Client = new MessageProtoService.MessageProtoServiceClient(invoker);
         }
 
         public void LogRequest(string requestId, string request)

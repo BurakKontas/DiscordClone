@@ -13,9 +13,9 @@ namespace DiscordClone.MessageService.Service.Contracts
 
         Task<Message> AddMessage(Message message);
 
-        Task<Message> UpdateMessage(Message message);
+        Task<Message?> UpdateMessage(Message message);
 
-        Task DeleteMessage(Guid messageId);
+        Task<bool> DeleteMessage(Guid messageId);
 
         Task<IEnumerable<Message>> GetMessagesByUser(Guid userId);
 

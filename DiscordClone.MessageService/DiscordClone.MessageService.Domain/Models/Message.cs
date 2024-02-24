@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace DiscordClone.MessageService.Domain.Models
 {
@@ -14,6 +15,7 @@ namespace DiscordClone.MessageService.Domain.Models
         public Guid UserId { get; set; }
         public Guid ChannelId { get; set; }
         public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         public override string ToString()
         {
@@ -28,7 +30,8 @@ namespace DiscordClone.MessageService.Domain.Models
                 Content = row.GetValue<string>("content"),
                 UserId = row.GetValue<Guid>("user_id"),
                 ChannelId = row.GetValue<Guid>("channel_id"),
-                CreatedAt = row.GetValue<DateTime>("created_at")
+                CreatedAt = row.GetValue<DateTime>("created_at"),
+                UpdatedAt = row.GetValue<DateTime?>("updated_at")
             };
         }
 

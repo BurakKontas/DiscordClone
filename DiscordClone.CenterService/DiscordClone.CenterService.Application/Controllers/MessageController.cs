@@ -1,26 +1,70 @@
-using DiscordClone.CenterService.Domain.Models;
 using DiscordClone.CenterService.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using MediatR;
+using DiscordClone.CenterService.Application.Queries.Message;
 
 namespace DiscordClone.CenterService.Application.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class MessageController(
-        MessageContext messageContext
-    ) : ControllerBase
+    public class MessageController(IMediator mediator) : ControllerBase
     {
-        [HttpGet]
-        public async Task<Response<HelloReply>> Get()
+        private readonly IMediator _mediator = mediator;
+
+        [HttpPost("addmessage")]
+        public async Task<IActionResult> AddMessage(AddMessageRequest request)
         {
-            try
-            {
-                var reply = await messageContext.Client.SayHelloAsync(new HelloRequest() { Name = "Arda" });
-                return Response<HelloReply>.Success(reply);
-            } catch (Exception ex)
-            {
-                return Response<HelloReply>.Fail(ex);
-            }
+            var reply = await _mediator.Send(new AddMessageQuery(request));
+            return Ok(reply);
+        }
+
+        [HttpGet("getmessages")]
+        public async Task<IActionResult> GetMessages()
+        {
+            var reply = await _mediator.Send(new GetMessagesQuery(new() { }));
+            return Ok(reply);
+        }
+
+        [HttpGet("getmessage")]
+        public async Task<IActionResult> GetMessage(GetMessageRequest request)
+        {
+            var reply = await _mediator.Send(new GetMessageQuery(request));
+            return Ok(reply);
+        }
+
+        [HttpPut("updatemessage")]
+        public async Task<IActionResult> UpdateMessage(UpdateMessageRequest request)
+        {
+            var reply = await _mediator.Send(new UpdateMessageQuery(request));
+            return Ok(reply);
+        }
+
+        [HttpDelete("deletemessage")]
+        public async Task<IActionResult> DeleteMessage(DeleteMessageRequest request)
+        {
+            var reply = await _mediator.Send(new DeleteMessageQuery(request));
+            return Ok(reply);
+        }
+
+        [HttpGet("getmessagesbychannel")]
+        public async Task<IActionResult> GetMessagesByChannel(GetMessagesByChannelRequest request)
+        {
+            var reply = await _mediator.Send(new GetMessagesByChannelQuery(request));
+            return Ok(reply);
+        }
+
+        [HttpGet("getmessagesbyuser")]
+        public async Task<IActionResult> GetMessagesByUser(GetMessagesByUserRequest request)
+        {
+            var reply = await _mediator.Send(new GetMessagesByUserQuery(request));
+            return Ok(reply);
+        }
+
+        [HttpGet("getmessagesbydate")]
+        public async Task<IActionResult> GetMessagesByDate(GetMessagesByChannelAndTimeRangeRequest request)
+        {
+            var reply = await _mediator.Send(new GetMessagesByChannelAndTimeRangeQuery(request));
+            return Ok(reply);
         }
     }
 }
