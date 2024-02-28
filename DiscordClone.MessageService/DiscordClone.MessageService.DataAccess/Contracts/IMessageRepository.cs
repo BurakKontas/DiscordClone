@@ -11,7 +11,7 @@ namespace DiscordClone.MessageService.DataAccess.Contracts
     {
         Task<IEnumerable<Message>> GetMessages();
         Task<Message?> Add(Message message);
-        Task<Message?> Delete(Guid messageId);
+        Task<bool> Delete(Guid messageId);
         Task<Message?> Update(Message message);
         Task<Message?> Get(Guid messageId);
         Task<IEnumerable<Message>> GetByUser(Guid userId);

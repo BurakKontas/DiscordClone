@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DiscordClone.MessageService.DataAccess.Repositories
 {
-    public class MessageRepository(MessageContext context) : IMessageRepository
+    public class CassandraMessageRepository(MessageContext context) : IMessageRepository
     {
         private readonly MessageContext _context = context;
 
@@ -30,10 +30,17 @@ namespace DiscordClone.MessageService.DataAccess.Repositories
             return await GetAndReturnMessage(cql);
         }
 
-        public async Task<Message?> Delete(Guid messageId)
+        public async Task<bool> Delete(Guid messageId)
         {
-            var cql = $"DELETE FROM discord.messages WHERE message_id = {messageId}";
-            return await GetAndReturnMessage(cql);
+            try
+            {
+                var cql = $"DELETE FROM discord.messages WHERE message_id = {messageId}";
+                await GetAndReturnMessage(cql);
+                return true;
+            } catch (Exception)
+            {
+                return false;
+            }
         }
 
         public async Task<Message?> Update(Message message)

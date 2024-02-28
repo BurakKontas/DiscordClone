@@ -57,10 +57,10 @@ namespace DiscordClone.MessageService.Service.Services
             var isExists = await _messageRepository.MessageExists(messageId);
             if (!isExists)
             {
-                throw new RpcException(new Status(StatusCode.NotFound, $"Message with ID {messageId} not found."));
+                return false;
+                //throw new RpcException(new Status(StatusCode.NotFound, $"Message with ID {messageId} not found."));
             }
-            await _messageRepository.Delete(messageId);
-            return true;
+            return await _messageRepository.Delete(messageId);
         }
 
         public async Task<IEnumerable<Message>> GetMessagesByUser(Guid userId)

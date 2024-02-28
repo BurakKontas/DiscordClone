@@ -12,11 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddGrpc();
 builder.Services.AddGrpcReflection();
-builder.Services.AddSingleton(new MessageContext("172.23.32.1", 9042, "discord"));
-builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+//builder.Services.AddSingleton(new MessageContext("172.23.32.1", 9042, "discord"));
+//builder.Services.AddScoped<IMessageRepository, CassandraMessageRepository>();
+
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(ErrorHandlingBehavior<,>));
+builder.Services.AddSingleton<IMessageRepository, ElasticsearchMessageRepository>();
 
 var app = builder.Build();
 
