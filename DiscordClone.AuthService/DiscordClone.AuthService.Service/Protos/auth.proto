@@ -8,6 +8,9 @@ service AuthenticationService {
     rpc GenerateToken(TokenRequest) returns (TokenResponse) {}
     rpc ValidateToken(TokenValidationRequest) returns (TokenValidationResponse) {}
     rpc RefreshToken(RefreshTokenRequest) returns (TokenResponse) {}
+    rpc Login(LoginRequest) returns (LoginResponse) {}
+    rpc Register(RegisterRequest) returns (RegisterResponse) {}
+    rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse) {}
 }
 
 message TokenRequest {
@@ -33,4 +36,34 @@ message TokenValidationResponse {
 
 message RefreshTokenRequest {
     string refresh_token = 1;
+}
+
+message LoginRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    string access_token = 1;
+    string refresh_token = 2;
+    int64 expires_in = 3;
+}
+
+message RegisterRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message RegisterResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ForgotPasswordRequest {
+    string email = 1;
+}
+
+message ForgotPasswordResponse {
+    bool success = 1;
+    string message = 2;
 }
