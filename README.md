@@ -47,6 +47,7 @@ Communication between services is facilitated via gRPC, while the CenterService 
 - **Authentication**:
   - `POST /auth/login`: Generate a token by providing username and password.
   - `POST /auth/register`: Register a new user.
+  - `POST /auth/forgotpassword`: Reset users password.
   - `POST /auth/validate`: Validate a token.
   - `POST /auth/refresh`: Refresh a token.
 
