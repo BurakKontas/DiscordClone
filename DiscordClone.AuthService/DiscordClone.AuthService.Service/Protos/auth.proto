@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option csharp_namespace = "DiscordClone.AuthService.Service";
+
+package authproto;
+
+service AuthenticationService {
+    rpc GenerateToken(TokenRequest) returns (TokenResponse) {}
+    rpc ValidateToken(TokenValidationRequest) returns (TokenValidationResponse) {}
+    rpc RefreshToken(RefreshTokenRequest) returns (TokenResponse) {}
+}
+
+message TokenRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message TokenResponse {
+    string access_token = 1;
+    string refresh_token = 2;
+    int64 expires_in = 3;
+}
+
+message TokenValidationRequest {
+    string token = 1;
+}
+
+message TokenValidationResponse {
+    bool is_valid = 1;
+    string username = 2;
+    int64 expires_in = 3;
+}
+
+message RefreshTokenRequest {
+    string refresh_token = 1;
+}
