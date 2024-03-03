@@ -1,5 +1,5 @@
 ﻿using DiscordClone.MessageService.Application.Queries;
-using DiscordClone.MessageService.Service;
+using DiscordClone.MessageService.Domain;
 using DiscordClone.MessageService.Service.Adapters;
 using DiscordClone.MessageService.Service.Contracts;
 using MediatR;
@@ -15,7 +15,7 @@ namespace DiscordClone.MessageService.Application.Handlers
             var message = await _messageService.GetMessage(Guid.Parse(request.Request.MessageId));
             return new GetMessageReply
             {
-                Message = message.ToMessageProto()
+                Message = message.ToMessageProtos()
             };
         }
     }

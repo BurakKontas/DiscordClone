@@ -1,5 +1,5 @@
 using DiscordClone.MessageService.Application.Queries;
-using DiscordClone.MessageService.Service;
+using DiscordClone.MessageService.Domain;
 using Grpc.Core;
 using MediatR;
 

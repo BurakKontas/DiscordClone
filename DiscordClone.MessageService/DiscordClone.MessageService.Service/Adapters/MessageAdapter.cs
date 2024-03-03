@@ -1,4 +1,5 @@
-﻿using DiscordClone.MessageService.Domain.Models;
+﻿using DiscordClone.MessageService.Domain;
+using DiscordClone.MessageService.Domain.Models;
 
 namespace DiscordClone.MessageService.Service.Adapters
 {

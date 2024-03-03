@@ -1,7 +1,9 @@
 
 using DiscordClone.AuthService.Application.Controllers;
+using DiscordClone.AuthService.Infrastructure;
 using DiscordClone.MessageService.Application.Behaviors;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,11 @@ builder.Services.AddGrpcReflection();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(ErrorHandlingBehavior<,>));
+
+builder.Services.AddDbContext<AuthenticationContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ConnectionString"));
+});
 
 var app = builder.Build();
 

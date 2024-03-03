@@ -1,4 +1,5 @@
 ﻿using DiscordClone.CenterService.Application.Queries.Message;
+using DiscordClone.CenterService.Domain;
 using DiscordClone.CenterService.Infrastructure;
 using DiscordClone.CenterService.Service.Contracts;
 using MediatR;

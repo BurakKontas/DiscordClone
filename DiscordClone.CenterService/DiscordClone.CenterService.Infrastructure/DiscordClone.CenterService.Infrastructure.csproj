@@ -32,8 +32,4 @@
     <ProjectReference Include="..\DiscordClone.CenterService.Domain\DiscordClone.CenterService.Domain.csproj" />
   </ItemGroup>
 
-	<ItemGroup>
-		<Protobuf Include="Protos\*.proto" GrpcServices="Client" />
-	</ItemGroup>
-
 </Project>

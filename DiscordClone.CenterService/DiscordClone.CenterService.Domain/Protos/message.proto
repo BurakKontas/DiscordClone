@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "DiscordClone.CenterService.Infrastructure";
+option csharp_namespace = "DiscordClone.CenterService.Domain";
 
 package messageproto;
 

@@ -38,5 +38,15 @@ namespace DiscordClone.AuthService.Application.Controllers
         {
             return await _mediator.Send(new ForgotPasswordQuery(request));
         }
+
+        public override async Task<BanUserResponse> BanUser(BanUserRequest request, ServerCallContext context)
+        {
+            return await _mediator.Send(new BanUserQuery(request));
+        }
+
+        public override async Task<UnbanUserResponse> UnbanUser(UnbanUserRequest request, ServerCallContext context)
+        {
+            return await _mediator.Send(new UnbanUserQuery(request));
+        }
     }
 }

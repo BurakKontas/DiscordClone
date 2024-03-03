@@ -2,6 +2,7 @@ using DiscordClone.CenterService.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using DiscordClone.CenterService.Application.Queries.Message;
+using DiscordClone.CenterService.Domain;
 
 namespace DiscordClone.CenterService.Application.Controllers
 {
