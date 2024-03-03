@@ -7,17 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\auth.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.61.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Protos\auth.proto">
-      <GrpcServices>Server</GrpcServices>
-    </None>
+    <ProjectReference Include="..\DiscordClone.AuthService.DataAccess\DiscordClone.AuthService.DataAccess.csproj" />
+    <ProjectReference Include="..\DiscordClone.AuthService.Domain\DiscordClone.AuthService.Domain.csproj" />
+    <ProjectReference Include="..\DiscordClone.AuthService.Infrastructure\DiscordClone.AuthService.Infrastructure.csproj" />
   </ItemGroup>
 
-	<ItemGroup>
-		<Protobuf Include="Protos\auth.proto" GrpcServices="Server" />
-	</ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="Protos\auth.proto" GrpcServices="Server" />
+  </ItemGroup>
 
 </Project>

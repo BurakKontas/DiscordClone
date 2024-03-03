@@ -4,7 +4,7 @@ option csharp_namespace = "DiscordClone.AuthService.Service";
 
 package authproto;
 
-service AuthenticationService {
+service AuthenticationProtoService {
     rpc GenerateToken(TokenRequest) returns (TokenResponse) {}
     rpc ValidateToken(TokenValidationRequest) returns (TokenValidationResponse) {}
     rpc RefreshToken(RefreshTokenRequest) returns (TokenResponse) {}

@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DiscordClone.AuthService.Domain\DiscordClone.AuthService.Domain.csproj" />
+    <ProjectReference Include="..\DiscordClone.AuthService.Infrastructure\DiscordClone.AuthService.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
