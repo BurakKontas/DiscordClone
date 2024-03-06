@@ -8,9 +8,9 @@ namespace DiscordClone.AuthService.Domain.Models
 {
     public class TokenDetails
     {
-        public int? Role { get; set; }
-        public string? RoleName { get; set; }
+        public int? RoleId { get; set; }
+        public string? Role { get; set; }
         public string? Email { get; set; }
-        public Guid Useruuid { get; set; }
+        public Guid? Useruuid { get; set; }
     }
 }

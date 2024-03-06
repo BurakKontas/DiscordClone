@@ -12,7 +12,7 @@ namespace DiscordClone.AuthService.Application.Handlers
         #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<TokenValidationResponse> Handle(ValidateTokenQuery request, CancellationToken cancellationToken)
         {
-            var valid = _tokenService.ValidateToken(request.Request.Token);
+            var valid = _tokenService.ValidateToken(request.request.Token);
             return new TokenValidationResponse
             {
                 IsValid = valid

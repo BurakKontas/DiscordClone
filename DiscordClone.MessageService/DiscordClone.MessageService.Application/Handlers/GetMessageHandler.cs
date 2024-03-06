@@ -15,7 +15,7 @@ namespace DiscordClone.MessageService.Application.Handlers
             var message = await _messageService.GetMessage(Guid.Parse(request.Request.MessageId));
             return new GetMessageReply
             {
-                Message = message.ToMessageProtos()
+                Message = message.ToMessageProto()
             };
         }
     }

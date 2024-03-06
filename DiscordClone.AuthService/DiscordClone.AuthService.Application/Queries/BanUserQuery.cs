@@ -4,5 +4,5 @@ using MediatR;
 
 namespace DiscordClone.AuthService.Application.Queries
 {
-    public record BanUserQuery(BanUserRequest BanUserRequest) : IRequest<BanUserResponse>;
+    public record BanUserQuery(BanUserRequest request) : IRequest<BanUserResponse>;
 }

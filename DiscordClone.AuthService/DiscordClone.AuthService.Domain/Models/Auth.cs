@@ -19,7 +19,7 @@ public partial class Auth
 
     public bool? Banned { get; set; }
 
-    public int? RoleId { get; set; }
+    public int RoleId { get; set; }
 
     public virtual ICollection<Ban> Bans { get; set; } = new List<Ban>();
 

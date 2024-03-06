@@ -4,5 +4,5 @@ using MediatR;
 
 namespace DiscordClone.AuthService.Application.Queries
 {
-    public record RefreshTokenQuery(RefreshTokenRequest Request): IRequest<LoginResponse>;
+    public record RefreshTokenQuery(RefreshTokenRequest request) : IRequest<LoginResponse>;
 }

@@ -14,12 +14,6 @@ namespace DiscordClone.AuthService.DataAccess.Repositories
 
         public async Task<bool> AddUser(Auth user)
         {
-            var userRole = await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == "user");
-            if (userRole == null)
-            {
-                throw new Exception("User role not found");
-            }
-            user.RoleId = userRole.Id;
             await _context.Auths.AddAsync(user);
             await _context.SaveChangesAsync();
             return true;
@@ -70,12 +64,22 @@ namespace DiscordClone.AuthService.DataAccess.Repositories
 
         public async Task<Auth?> GetUser(Guid userUuid)
         {
-            return await _context.Auths.FirstOrDefaultAsync(a => a.Useruuid == userUuid);
+            return await _context.Auths.Include(x => x.Role).FirstOrDefaultAsync(a => a.Useruuid == userUuid);
         }
 
         public async Task<Auth?> GetUser(string email)
         {
-            return await _context.Auths.FirstOrDefaultAsync(a => a.Email == email);
+            return await _context.Auths.Include(x => x.Role).FirstOrDefaultAsync(a => a.Email == email);
+        }
+
+        public Task<Role?> GetRole(int roleId)
+        {
+            return _context.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
+        }
+
+        public Task<Role?> GetRole(string roleName)
+        {
+            return _context.Roles.FirstOrDefaultAsync(r => r.RoleName == roleName);
         }
     }
 }

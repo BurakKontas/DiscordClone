@@ -12,7 +12,7 @@ namespace DiscordClone.AuthService.Application.Handlers
 
         public async Task<ForgotPasswordResponse> Handle(ForgotPasswordQuery request, CancellationToken cancellationToken)
         {
-            return await _authenticationService.ForgotPassword(request.Request);
+            return await _authenticationService.ForgotPassword(request.request);
         }
     }
 }

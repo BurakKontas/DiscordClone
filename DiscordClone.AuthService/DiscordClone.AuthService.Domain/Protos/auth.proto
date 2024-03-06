@@ -12,6 +12,7 @@ service AuthenticationProtoService {
     rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse) {}
     rpc BanUser(BanUserRequest) returns (BanUserResponse) {}
     rpc UnbanUser(UnbanUserRequest) returns (UnbanUserResponse) {}
+    rpc ExtractToken(ExtractTokenRequest) returns (ExtractTokenResponse) {}
 }
 
 message TokenRequest {
@@ -22,8 +23,8 @@ message TokenRequest {
 message TokenResponse {
     string access_token = 1;
     string refresh_token = 2;
-    int64 expires_in = 3;
-    int64 refresh_expires_in = 4;
+    int32 expires_in = 3;
+    int32 refresh_expires_in = 4;
 }
 
 message TokenValidationRequest {
@@ -33,7 +34,7 @@ message TokenValidationRequest {
 message TokenValidationResponse {
     bool is_valid = 1;
     string email = 2;
-    int64 expires_in = 3;
+    int32 expires_in = 3;
 }
 
 message RefreshTokenRequest {
@@ -48,7 +49,7 @@ message LoginRequest {
 message LoginResponse {
     string access_token = 1;
     string refresh_token = 2;
-    int64 expires_in = 3;
+    int32 expires_in = 3;
 }
 
 message RegisterRequest {
@@ -88,4 +89,15 @@ message UnbanUserRequest {
 message UnbanUserResponse {
     bool success = 1;
     string message = 2;
+}
+
+message ExtractTokenRequest {
+	string token = 1;
+}
+
+message ExtractTokenResponse {
+	string email = 1;
+    int32 role_id = 2;
+    string role = 3;
+    string user_uuid = 4;
 }

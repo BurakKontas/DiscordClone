@@ -61,6 +61,13 @@ namespace DiscordClone.CenterService.Application.Controllers
             return Ok(reply);
         }
 
+        [HttpPost("extracttoken")]
+        public async Task<IActionResult> ExtractToken([FromBody] ExtractTokenRequest request)
+        {
+            var reply = await _mediator.Send(new ExtractTokenQuery(request));
+            return Ok(reply);
+        }
+
 
     }
 }

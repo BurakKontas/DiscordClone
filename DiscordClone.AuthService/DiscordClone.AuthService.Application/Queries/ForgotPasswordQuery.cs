@@ -4,5 +4,5 @@ using MediatR;
 
 namespace DiscordClone.AuthService.Application.Queries
 {
-    public record ForgotPasswordQuery(ForgotPasswordRequest Request): IRequest<ForgotPasswordResponse>;
+    public record ForgotPasswordQuery(ForgotPasswordRequest request) : IRequest<ForgotPasswordResponse>;
 }

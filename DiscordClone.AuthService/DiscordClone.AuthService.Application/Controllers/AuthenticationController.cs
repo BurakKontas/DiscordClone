@@ -44,5 +44,10 @@ namespace DiscordClone.AuthService.Application.Controllers
         {
             return await _mediator.Send(new UnbanUserQuery(request));
         }
+
+        public override async Task<ExtractTokenResponse> ExtractToken(ExtractTokenRequest request, ServerCallContext context)
+        {
+            return await _mediator.Send(new ExtractTokenQuery(request));
+        }
     }
 }

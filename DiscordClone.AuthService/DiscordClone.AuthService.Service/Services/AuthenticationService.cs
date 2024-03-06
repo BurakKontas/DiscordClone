@@ -43,7 +43,7 @@ namespace DiscordClone.AuthService.Service.Services
 
         public async Task<LoginResponse> LoginUser(LoginRequest loginRequest, string? refreshToken)
         {
-            CheckIfUserExists(loginRequest.Email);
+            await CheckIfUserExists(loginRequest.Email, true);
             var user = await _authenticationRepository.GetUser(loginRequest.Email);
             var comparison = CypherService.Compare(loginRequest.Password, user!.Passwordhash);
             if (!comparison)
@@ -51,17 +51,19 @@ namespace DiscordClone.AuthService.Service.Services
             var tokenDetails = new TokenDetails
             {
                 Email = user.Email,
-                Role = user.RoleId,
-                RoleName = user.Role!.RoleName,
+                Role = user.Role!.RoleName,
+                RoleId = user.RoleId,
                 Useruuid = user.Useruuid
             };
             var tokens = _tokenService.GenerateToken(tokenDetails);
             var expiresIn = tokens.Expiry.Subtract(DateTime.UtcNow).TotalSeconds;
+            user.LastLogin = DateTime.Now;
+            await _authenticationRepository.UpdateUser(user);
 
             return new LoginResponse
             {
-                AccessToken = tokens.RefreshToken,
-                ExpiresIn = (long)expiresIn,
+                AccessToken = tokens.Token,
+                ExpiresIn = (int)expiresIn,
                 RefreshToken = string.IsNullOrEmpty(refreshToken) ? tokens.RefreshToken : refreshToken,  
             };
         }
@@ -78,7 +80,9 @@ namespace DiscordClone.AuthService.Service.Services
             }
 
             var tokenDetails = _tokenService.RefreshToken(refreshToken);
-            var user = await  _authenticationRepository.GetUser(tokenDetails.Email!);
+            var user = await _authenticationRepository.GetUser(tokenDetails.Email!);
+            user!.LastLogin = DateTime.Now;
+            await _authenticationRepository.UpdateUser(user);
 
             return await LoginUser(new LoginRequest
             {
@@ -90,13 +94,16 @@ namespace DiscordClone.AuthService.Service.Services
 
         public async Task<RegisterResponse> RegisterUser(RegisterRequest registerRequest)
         {
-            CheckIfUserExists(registerRequest.Email);
+            await CheckIfUserExists(registerRequest.Email, false);
 
+            var userRole = await _authenticationRepository.GetRole("user");
             var user = new Auth
             {
                 Email = registerRequest.Email,
                 Passwordhash = CypherService.Encrypt(registerRequest.Password),
-                Useruuid = Guid.NewGuid()
+                Useruuid = Guid.NewGuid(),
+                RoleId = userRole!.Id,
+                LastLogin = DateTime.Now
             };
 
             var result = await _authenticationRepository.AddUser(user);
@@ -116,7 +123,7 @@ namespace DiscordClone.AuthService.Service.Services
         public async Task<UnbanUserResponse> UnbanUser(UnbanUserRequest unbanUserRequest)
         {
             var userid = Guid.Parse(unbanUserRequest.UserUuid);
-            CheckIfUserExists(userid);
+            await CheckIfUserExists(userid, true);
 
             var result = await _authenticationRepository.UnbanUser(userid);
             if(result)
@@ -133,18 +140,18 @@ namespace DiscordClone.AuthService.Service.Services
 
         }
 
-        private async void CheckIfUserExists(Guid userUuid)
+        private async Task CheckIfUserExists(Guid userUuid, bool wannabeExist)
         {
             var ifUserExists = await _authenticationRepository.UserExists(userUuid);
             if (!ifUserExists)
-                throw new Exception("User does not exist");
+                if(wannabeExist) throw new Exception("User does not exist");
         }
 
-        private async void CheckIfUserExists(string email)
+        private async Task CheckIfUserExists(string email, bool wannabeExist)
         {
             var ifUserExists = await _authenticationRepository.UserExists(email);
             if (!ifUserExists)
-                throw new Exception("User does not exist");
+                if(wannabeExist) throw new Exception("User does not exist");
         }
     }
 }

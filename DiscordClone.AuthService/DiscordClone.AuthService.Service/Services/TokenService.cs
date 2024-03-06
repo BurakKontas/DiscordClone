@@ -21,11 +21,11 @@ namespace DiscordClone.AuthService.Service.Services
         public TokenService(IConfiguration configuration)
         {
             var section = configuration.GetSection("Jwt");
-            _secretKey = section["Jwt:SecretKey"]!;
-            _issuer = section["Jwt:Issuer"]!;
-            _audience = section["Jwt:Audience"]!;
-            _expiryMinutes = int.Parse(section["Jwt:ExpiryMinutes"]!);
-            _refreshTokenExpiryMinutes = int.Parse(section["Jwt:RefreshTokenExpiryMinutes"]!);
+            _secretKey = section["SecretKey"]!;
+            _issuer = section["Issuer"]!;
+            _audience = section["Audience"]!;
+            _expiryMinutes = int.Parse(section["ExpiryMinutes"]!);
+            _refreshTokenExpiryMinutes = int.Parse(section["RefreshExpiryMinutes"]!);
         }   
 
         private string GenerateTokens(TokenDetails tokenDetails, int expiryMinutes)
@@ -75,7 +75,12 @@ namespace DiscordClone.AuthService.Service.Services
 
         public string GenerateRefreshToken(TokenDetails tokenDetails)
         {
-            return GenerateTokens(tokenDetails, _refreshTokenExpiryMinutes);
+            // Sadece email içeren bir token oluştur
+            var emailTokenDetails = new TokenDetails
+            {
+                Email = tokenDetails.Email
+            };
+            return GenerateTokens(emailTokenDetails, _refreshTokenExpiryMinutes);
         }
 
         public string? GetEmailFromToken(string token)
@@ -142,7 +147,7 @@ namespace DiscordClone.AuthService.Service.Services
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
 
-                return ExtractTokenDetails((JwtSecurityToken)validatedToken);
+                return ExtractToken((JwtSecurityToken)validatedToken);
             }
             catch (Exception ex)
             {
@@ -151,15 +156,32 @@ namespace DiscordClone.AuthService.Service.Services
             }
         }
 
-        private TokenDetails ExtractTokenDetails(JwtSecurityToken jwtToken)
+        public TokenDetails ExtractToken(JwtSecurityToken jwtToken)
         {
+            var emailClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == "Email");
+            var roleIdClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == "RoleId");
+            var userUuidClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == "Useruuid");
+
+            // Kontrol edilmemiş null durumu
+            if (emailClaim == null || roleIdClaim == null || userUuidClaim == null)
+            {
+                throw new ArgumentException("Token claims are invalid.");
+            }
+
+            // RoleId claim'inin değerini güvenli bir şekilde dönüştürme
+            if (!int.TryParse(roleIdClaim.Value, out int roleId))
+            {
+                throw new ArgumentException("Invalid value for RoleId claim.");
+            }
+
             return new TokenDetails
             {
-                Email = jwtToken.Claims.FirstOrDefault(x => x.Type == "Email")?.Value,
-                Role = Int32.Parse(jwtToken.Claims.FirstOrDefault(x => x.Type == "Role")!.Value),
-                RoleName = jwtToken.Claims.FirstOrDefault(x => x.Type == "RoleName")?.Value,
-                Useruuid = Guid.Parse(jwtToken.Claims.FirstOrDefault(x => x.Type == "Useruuid")!.Value)
+                Email = emailClaim.Value,
+                RoleId = roleId,
+                Role = jwtToken.Claims.FirstOrDefault(x => x.Type == "Role")?.Value,
+                Useruuid = Guid.Parse(userUuidClaim.Value)
             };
         }
+
     }
 }

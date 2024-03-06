@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using DiscordClone.CenterService.Application.Queries.Message;
 using DiscordClone.CenterService.Domain;
+using DiscordClone.CenterService.Application.Attributes;
 
 namespace DiscordClone.CenterService.Application.Controllers
 {
@@ -12,6 +13,7 @@ namespace DiscordClone.CenterService.Application.Controllers
     {
         private readonly IMediator _mediator = mediator;
 
+        [Authorize(1)]
         [HttpPost("addmessage")]
         public async Task<IActionResult> AddMessage(AddMessageRequest request)
         {

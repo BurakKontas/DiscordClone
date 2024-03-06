@@ -23,7 +23,8 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddDbContext<AuthContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("ConnectionString"));
+    var connectionstring = builder.Configuration["ConnectionString"];
+    options.UseNpgsql(connectionstring);
 });
 
 var app = builder.Build();

@@ -16,5 +16,6 @@ namespace DiscordClone.CenterService.Service.Contracts
         public Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest request);
         public Task<BanUserResponse> BanUserAsync(BanUserRequest request);
         public Task<UnbanUserResponse> UnbanUserAsync(UnbanUserRequest request);
+        public Task<ExtractTokenResponse> ExtractTokenAsync(ExtractTokenRequest request);
     }
 }

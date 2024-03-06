@@ -4,5 +4,5 @@ using MediatR;
 
 namespace DiscordClone.AuthService.Application.Queries
 {
-    public record UnbanUserQuery(UnbanUserRequest UnbanUserRequest) : IRequest<UnbanUserResponse>;
+    public record UnbanUserQuery(UnbanUserRequest request) : IRequest<UnbanUserResponse>;
 }   

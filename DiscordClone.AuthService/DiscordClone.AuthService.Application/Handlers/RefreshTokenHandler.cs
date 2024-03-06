@@ -11,7 +11,7 @@ namespace DiscordClone.AuthService.Application.Handlers
         private readonly IAuthenticationService _authenticationService = authenticationService;
         public async Task<LoginResponse> Handle(RefreshTokenQuery request, CancellationToken cancellationToken)
         {
-            return await _authenticationService.LoginUser(request.Request);
+            return await _authenticationService.LoginUser(request.request);
         }
     }
 }

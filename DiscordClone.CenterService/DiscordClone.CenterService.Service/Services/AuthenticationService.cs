@@ -53,5 +53,11 @@ namespace DiscordClone.CenterService.Service.Services
             var reply = await _context.Client.UnbanUserAsync(request);
             return reply;
         }   
+
+        public async Task<ExtractTokenResponse> ExtractTokenAsync(ExtractTokenRequest request)
+        {
+            var reply = await _context.Client.ExtractTokenAsync(request);
+            return reply;
+        }
     }
 }

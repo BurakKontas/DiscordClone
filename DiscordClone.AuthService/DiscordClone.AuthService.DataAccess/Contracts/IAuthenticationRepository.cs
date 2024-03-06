@@ -18,5 +18,8 @@ namespace DiscordClone.AuthService.DataAccess.Contracts
         Task<bool> UserExists(string email);
         Task<Auth?> GetUser(Guid userUuid);
         Task<Auth?> GetUser(string email);
+        Task<Role?> GetRole(int roleId);
+        Task<Role?> GetRole(string roleName);
+
     }
 }
