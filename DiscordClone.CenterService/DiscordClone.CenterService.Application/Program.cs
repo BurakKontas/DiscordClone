@@ -7,12 +7,17 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Log.Logger = new LoggerConfiguration()
+var loggerConfig = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .WriteTo.Console()
-    .WriteTo.File("logs/loadbalancer.log", rollingInterval: RollingInterval.Day)
-    .WriteTo.Seq("http://172.23.32.1:5341", apiKey: "33YqEQApCZ50n63v4TCX")
-    .CreateLogger();
+    .WriteTo.File("logs/loadbalancer.log", rollingInterval: RollingInterval.Day);
+
+var seqServerUrl = builder.Configuration["Logging:Seq:ServerUrl"];
+var seqApiKey = builder.Configuration["Logging:Seq:ApiKey"];
+if (!string.IsNullOrEmpty(seqServerUrl) && !string.IsNullOrEmpty(seqApiKey))
+    loggerConfig.WriteTo.Seq(seqServerUrl, apiKey: seqApiKey);
+
+Log.Logger = loggerConfig.CreateLogger();
 
 // Add services to the container.
 builder.Services.AddSingleton(Log.Logger);
