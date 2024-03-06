@@ -77,7 +77,7 @@ public partial class AuthContext : DbContext
             entity.Property(e => e.BanReason).HasColumnName("ban_reason");
             entity.Property(e => e.Useruuid).HasColumnName("useruuid");
 
-            entity.HasOne(d => d.Useruu).WithMany(p => p.Bans)
+            entity.HasOne(d => d.User).WithMany(p => p.Bans)
                 .HasPrincipalKey(p => p.Useruuid)
                 .HasForeignKey(d => d.Useruuid)
                 .HasConstraintName("fk_bans_useruuid");
@@ -89,10 +89,10 @@ public partial class AuthContext : DbContext
 
             entity.ToTable("roles");
 
-            entity.HasIndex(e => e.Role1, "roles_role_key").IsUnique();
+            entity.HasIndex(e => e.RoleName, "roles_role_key").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Role1)
+            entity.Property(e => e.RoleName)
                 .HasMaxLength(50)
                 .HasColumnName("role");
         });

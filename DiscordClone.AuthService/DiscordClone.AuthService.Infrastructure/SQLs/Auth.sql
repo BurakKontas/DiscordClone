@@ -3,6 +3,10 @@
     role VARCHAR(50) UNIQUE
 );
 
+INSERT INTO roles (id, role) VALUES (1,'user');
+INSERT INTO roles (id, role) VALUES (2, 'admin');
+INSERT INTO roles (id, role) VALUES (3, 'moderator');
+
 CREATE TABLE auth (
     id SERIAL PRIMARY KEY,
     useruuid UUID UNIQUE NOT NULL, -- Benzersiz kısıtlama ekledik

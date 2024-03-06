@@ -1,4 +1,5 @@
 ﻿using DiscordClone.AuthService.Domain;
+using DiscordClone.AuthService.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,13 @@ namespace DiscordClone.AuthService.DataAccess.Contracts
 {
     public interface IAuthenticationRepository
     {
-        public Task<RegisterResponse> RegisterUser(RegisterRequest registerRequest);
-        public Task<LoginResponse> LoginUser(LoginRequest loginRequest);
-        public Task<BanUserResponse> BanUser(BanUserRequest banUserRequest);
-        public Task<UnbanUserResponse> UnbanUser(UnbanUserRequest unbanUserRequest);
-        public Task<ForgotPasswordRequest> ForgotPassword(ForgotPasswordRequest forgotPasswordRequest);
+        Task<bool> AddUser(Auth user);
+        Task<bool> UpdateUser(Auth user);
+        Task<bool> BanUser(Guid userUuid, string banReason, DateTime banDate, Guid adminUuid);
+        Task<bool> UnbanUser(Guid userUuid);
+        Task<bool> UserExists(Guid userUuid);
+        Task<bool> UserExists(string email);
+        Task<Auth?> GetUser(Guid userUuid);
+        Task<Auth?> GetUser(string email);
     }
 }

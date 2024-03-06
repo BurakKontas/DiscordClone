@@ -15,5 +15,5 @@ public partial class Ban
 
     public DateTime BanDate { get; set; }
 
-    public virtual Auth Useruu { get; set; } = null!;
+    public virtual Auth User { get; set; } = null!;
 }

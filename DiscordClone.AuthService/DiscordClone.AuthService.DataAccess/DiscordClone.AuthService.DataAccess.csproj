@@ -11,8 +11,4 @@
     <ProjectReference Include="..\DiscordClone.AuthService.Infrastructure\DiscordClone.AuthService.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>

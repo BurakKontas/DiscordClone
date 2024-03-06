@@ -1,14 +1,17 @@
 ﻿using DiscordClone.AuthService.Application.Queries;
+using DiscordClone.AuthService.Domain;
 using DiscordClone.AuthService.Service;
+using DiscordClone.AuthService.Service.Contracts;
 using MediatR;
 
 namespace DiscordClone.AuthService.Application.Handlers
 {
-    public class RefreshTokenHandler(): IRequestHandler<RefreshTokenQuery, TokenResponse>
+    public class RefreshTokenHandler(IAuthenticationService authenticationService) : IRequestHandler<RefreshTokenQuery, LoginResponse>
     {
-        public async Task<TokenResponse> Handle(RefreshTokenQuery request, CancellationToken cancellationToken)
+        private readonly IAuthenticationService _authenticationService = authenticationService;
+        public async Task<LoginResponse> Handle(RefreshTokenQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _authenticationService.LoginUser(request.Request);
         }
     }
 }

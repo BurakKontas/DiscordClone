@@ -1,37 +1,81 @@
 ﻿using DiscordClone.AuthService.DataAccess.Contracts;
+using DiscordClone.AuthService.Domain;
+using DiscordClone.AuthService.Domain.Models;
+using DiscordClone.AuthService.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DiscordClone.AuthService.DataAccess.Repositories
 {
-    public class AuthenticationRepository : IAuthenticationRepository
+    public class AuthenticationRepository(AuthContext context) : IAuthenticationRepository
     {
-        public Task<BanUserResponse> BanUser(BanUserRequest banUserRequest)
+        private readonly AuthContext _context = context;
+
+        public async Task<bool> AddUser(Auth user)
         {
-            throw new NotImplementedException();
+            var userRole = await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == "user");
+            if (userRole == null)
+            {
+                throw new Exception("User role not found");
+            }
+            user.RoleId = userRole.Id;
+            await _context.Auths.AddAsync(user);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<ForgotPasswordRequest> ForgotPassword(ForgotPasswordRequest forgotPasswordRequest)
+        public async Task<bool> UpdateUser(Auth user)
         {
-            throw new NotImplementedException();
+            _context.Auths.Update(user);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<LoginResponse> LoginUser(LoginRequest loginRequest)
+        public async Task<bool> BanUser(Guid userUuid, string banReason, DateTime banDate, Guid adminUuid)
         {
-            throw new NotImplementedException();
+            var ban = new Ban
+            {
+                Useruuid = userUuid,
+                BanReason = banReason,
+                BanDate = banDate,
+                Adminuuid = adminUuid
+            };
+            await _context.Bans.AddAsync(ban);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<RegisterResponse> RegisterUser(RegisterRequest registerRequest)
+        public async Task<bool> UnbanUser(Guid userUuid)
         {
-            throw new NotImplementedException();
+            var userBan = await _context.Bans.FirstOrDefaultAsync(b => b.Useruuid == userUuid);
+            if (userBan != null)
+            {
+                _context.Bans.Remove(userBan);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
-        public Task<UnbanUserResponse> UnbanUser(UnbanUserRequest unbanUserRequest)
+        public async Task<bool> UserExists(Guid userUuid)
         {
-            throw new NotImplementedException();
+            return await _context.Auths.AnyAsync(a => a.Useruuid == userUuid);
+        }
+
+        public async Task<bool> UserExists(string email)
+        {
+            return await _context.Auths.AnyAsync(a => a.Email == email);
+        }
+
+        public async Task<Auth?> GetUser(Guid userUuid)
+        {
+            return await _context.Auths.FirstOrDefaultAsync(a => a.Useruuid == userUuid);
+        }
+
+        public async Task<Auth?> GetUser(string email)
+        {
+            return await _context.Auths.FirstOrDefaultAsync(a => a.Email == email);
         }
     }
 }

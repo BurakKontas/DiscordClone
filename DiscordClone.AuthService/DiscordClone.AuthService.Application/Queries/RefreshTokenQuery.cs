@@ -1,7 +1,8 @@
-﻿using DiscordClone.AuthService.Service;
+﻿using DiscordClone.AuthService.Domain;
+using DiscordClone.AuthService.Service;
 using MediatR;
 
 namespace DiscordClone.AuthService.Application.Queries
 {
-    public record RefreshTokenQuery(RefreshTokenRequest Request): IRequest<TokenResponse>;
+    public record RefreshTokenQuery(RefreshTokenRequest Request): IRequest<LoginResponse>;
 }

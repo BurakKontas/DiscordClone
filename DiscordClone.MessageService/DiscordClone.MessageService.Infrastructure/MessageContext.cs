@@ -1,5 +1,6 @@
 ﻿using Cassandra;
 using DiscordClone.MessageService.Domain.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Diagnostics.Metrics;
 
@@ -10,8 +11,13 @@ namespace DiscordClone.MessageService.Infrastructure
         private readonly Cluster _cluster;
         private readonly ISession _session;
 
-        public MessageContext(string contactPoint, int port, string keyspace)
+        public MessageContext(IConfiguration configuration)
         {
+            var section = configuration.GetSection("Cassandra");
+            var contactPoint = section["IP"];
+            var port = int.Parse(section["Port"]!);
+            var keyspace = section["Keyspace"];
+
             if (string.IsNullOrWhiteSpace(contactPoint))
                 throw new ArgumentNullException(nameof(contactPoint));
 

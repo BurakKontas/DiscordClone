@@ -1,4 +1,5 @@
 ﻿using DiscordClone.AuthService.Application.Queries;
+using DiscordClone.AuthService.Domain;
 using DiscordClone.AuthService.Service;
 using Grpc.Core;
 using MediatR;
@@ -9,17 +10,12 @@ namespace DiscordClone.AuthService.Application.Controllers
     {
         private readonly IMediator _mediator = mediator;
 
-        public override async Task<TokenResponse> GenerateToken(TokenRequest request, ServerCallContext context)
-        {
-            return await _mediator.Send(new GenerateTokenQuery(request));
-        }
-
         public override async Task<TokenValidationResponse> ValidateToken(TokenValidationRequest request, ServerCallContext context)
         {
             return await _mediator.Send(new ValidateTokenQuery(request));
         }
 
-        public override async Task<TokenResponse> RefreshToken(RefreshTokenRequest request, ServerCallContext context)
+        public override async Task<LoginResponse> RefreshToken(RefreshTokenRequest request, ServerCallContext context)
         {
             return await _mediator.Send(new RefreshTokenQuery(request));
         }
