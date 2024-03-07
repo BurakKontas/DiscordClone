@@ -8,6 +8,7 @@ public partial class Auth
     public int Id { get; set; }
 
     public Guid Useruuid { get; set; }
+    public string? Username { get; set; }
 
     public string Email { get; set; } = null!;
 

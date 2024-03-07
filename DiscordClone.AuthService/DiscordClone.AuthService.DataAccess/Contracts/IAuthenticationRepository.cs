@@ -12,7 +12,7 @@ namespace DiscordClone.AuthService.DataAccess.Contracts
     {
         Task<bool> AddUser(Auth user);
         Task<bool> UpdateUser(Auth user);
-        Task<bool> BanUser(Guid userUuid, string banReason, DateTime banDate, Guid adminUuid);
+        Task<bool> BanUser(Ban ban);
         Task<bool> UnbanUser(Guid userUuid);
         Task<bool> UserExists(Guid userUuid);
         Task<bool> UserExists(string email);

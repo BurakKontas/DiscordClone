@@ -54,7 +54,8 @@ message LoginResponse {
 
 message RegisterRequest {
     string email = 1;
-    string password = 2;
+    string username = 2;
+    string password = 3;
 }
 
 message RegisterResponse {
@@ -100,4 +101,5 @@ message ExtractTokenResponse {
     int32 role_id = 2;
     string role = 3;
     string user_uuid = 4;
+    string username = 5;
 }

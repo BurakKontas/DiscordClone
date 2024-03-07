@@ -179,7 +179,8 @@ namespace DiscordClone.AuthService.Service.Services
                 Email = emailClaim.Value,
                 RoleId = roleId,
                 Role = jwtToken.Claims.FirstOrDefault(x => x.Type == "Role")?.Value,
-                Useruuid = Guid.Parse(userUuidClaim.Value)
+                Useruuid = Guid.Parse(userUuidClaim.Value),
+                Username = jwtToken.Claims.FirstOrDefault(x => x.Type == "Username")?.Value
             };
         }
 

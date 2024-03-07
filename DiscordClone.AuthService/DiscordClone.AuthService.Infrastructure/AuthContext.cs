@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using DiscordClone.AuthService.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace DiscordClone.AuthService.Infrastructure;
 
 public partial class AuthContext : DbContext
 {
+    private readonly IConfiguration? _configuration;
+
     public AuthContext()
     {
     }
 
-    public AuthContext(DbContextOptions<AuthContext> options)
+    public AuthContext(DbContextOptions<AuthContext> options, IConfiguration configuration)
         : base(options)
     {
+        _configuration = configuration;
     }
 
     public virtual DbSet<Auth> Auths { get; set; }
@@ -21,6 +25,12 @@ public partial class AuthContext : DbContext
     public virtual DbSet<Ban> Bans { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var connectionString = _configuration?["ConnectionString"];
+        optionsBuilder.UseNpgsql(connectionString);    
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,8 +45,12 @@ public partial class AuthContext : DbContext
             entity.HasIndex(e => e.Useruuid, "auth_useruuid_key").IsUnique();
 
             entity.HasIndex(e => e.Useruuid, "idx_auth_useruuid");
+            entity.HasIndex(e => e.Username, "idx_auth_username");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Username)
+                .HasMaxLength(50)
+                .HasColumnName("username");
             entity.Property(e => e.Banned)
                 .HasDefaultValue(false)
                 .HasColumnName("banned");
@@ -95,6 +109,12 @@ public partial class AuthContext : DbContext
             entity.Property(e => e.RoleName)
                 .HasMaxLength(50)
                 .HasColumnName("role");
+
+            entity.HasData(
+                new Role { Id = 1, RoleName = "user" },
+                new Role { Id = 2, RoleName = "moderator" },
+                new Role { Id = 3, RoleName = "admin" }
+            );
         });
 
         OnModelCreatingPartial(modelBuilder);

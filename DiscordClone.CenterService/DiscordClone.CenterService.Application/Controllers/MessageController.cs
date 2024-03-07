@@ -17,6 +17,7 @@ namespace DiscordClone.CenterService.Application.Controllers
         [HttpPost("addmessage")]
         public async Task<IActionResult> AddMessage(AddMessageRequest request)
         {
+            var context = HttpContext;
             var reply = await _mediator.Send(new AddMessageQuery(request));
             return Ok(reply);
         }

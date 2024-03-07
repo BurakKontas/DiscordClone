@@ -26,15 +26,8 @@ namespace DiscordClone.AuthService.DataAccess.Repositories
             return true;
         }
 
-        public async Task<bool> BanUser(Guid userUuid, string banReason, DateTime banDate, Guid adminUuid)
+        public async Task<bool> BanUser(Ban ban)
         {
-            var ban = new Ban
-            {
-                Useruuid = userUuid,
-                BanReason = banReason,
-                BanDate = banDate,
-                Adminuuid = adminUuid
-            };
             await _context.Bans.AddAsync(ban);
             await _context.SaveChangesAsync();
             return true;

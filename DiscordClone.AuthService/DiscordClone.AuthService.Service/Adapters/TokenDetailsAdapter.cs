@@ -17,7 +17,8 @@ namespace DiscordClone.AuthService.Service.Adapters
                 Email = response.Email,
                 Role = response.Role,
                 RoleId = response.RoleId,
-                Useruuid = Guid.Parse(response.UserUuid)
+                Useruuid = Guid.Parse(response.UserUuid),
+                Username = response.Username
             };
         }
 
@@ -28,7 +29,8 @@ namespace DiscordClone.AuthService.Service.Adapters
                 Email = details.Email,
                 Role = details.Role,
                 RoleId = details.RoleId ?? 0,
-                UserUuid = details.Useruuid.ToString()
+                UserUuid = details.Useruuid.ToString(),
+                Username = details.Username
             };
         }
     }

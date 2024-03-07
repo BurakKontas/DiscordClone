@@ -17,10 +17,14 @@ namespace DiscordClone.AuthService.Service.Services
 
         public async Task<BanUserResponse> BanUser(BanUserRequest banUserRequest)
         {
-            var date = DateTime.Now;
-            var userid = Guid.Parse(banUserRequest.UserUuid);
-            var adminid = Guid.Parse(banUserRequest.AdminUuid);
-            var result = await _authenticationRepository.BanUser(userid, banUserRequest.BanReason, date, adminid);
+            var ban = new Ban
+            {
+                Useruuid = Guid.Parse(banUserRequest.UserUuid),
+                BanReason = banUserRequest.BanReason,
+                BanDate = DateTime.Now,
+                Adminuuid = Guid.Parse(banUserRequest.AdminUuid)
+            };
+            var result = await _authenticationRepository.BanUser(ban);
             if (result)
                 return new BanUserResponse
                 {
@@ -48,8 +52,10 @@ namespace DiscordClone.AuthService.Service.Services
             var comparison = CypherService.Compare(loginRequest.Password, user!.Passwordhash);
             if (!comparison)
                 throw new Exception("Invalid password");
+            await CheckIfUserBanned(user.Useruuid);
             var tokenDetails = new TokenDetails
             {
+                Username = user.Username,
                 Email = user.Email,
                 Role = user.Role!.RoleName,
                 RoleId = user.RoleId,
@@ -80,6 +86,8 @@ namespace DiscordClone.AuthService.Service.Services
             }
 
             var tokenDetails = _tokenService.RefreshToken(refreshToken);
+            await CheckIfUserExists(tokenDetails.Email!, true);
+            await CheckIfUserBanned((Guid)tokenDetails.Useruuid!);
             var user = await _authenticationRepository.GetUser(tokenDetails.Email!);
             user!.LastLogin = DateTime.Now;
             await _authenticationRepository.UpdateUser(user);
@@ -99,6 +107,7 @@ namespace DiscordClone.AuthService.Service.Services
             var userRole = await _authenticationRepository.GetRole("user");
             var user = new Auth
             {
+                Username = registerRequest.Username,
                 Email = registerRequest.Email,
                 Passwordhash = CypherService.Encrypt(registerRequest.Password),
                 Useruuid = Guid.NewGuid(),
@@ -152,6 +161,13 @@ namespace DiscordClone.AuthService.Service.Services
             var ifUserExists = await _authenticationRepository.UserExists(email);
             if (!ifUserExists)
                 if(wannabeExist) throw new Exception("User does not exist");
+        }
+
+        private async Task CheckIfUserBanned(Guid userUuid)
+        {
+            var user = await _authenticationRepository.GetUser(userUuid);
+            if (user!.Banned == true)
+                throw new Exception("User is banned");
         }
     }
 }

@@ -23,8 +23,8 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddDbContext<AuthContext>(options =>
 {
-    var connectionstring = builder.Configuration["ConnectionString"];
-    options.UseNpgsql(connectionstring);
+    var connectionString = builder.Configuration["ConnectionString"];
+    options.UseNpgsql(connectionString, b => b.MigrationsAssembly("DiscordClone.AuthService.Infrastructure"));
 });
 
 var app = builder.Build();
