@@ -6,12 +6,21 @@ package email;
 
 service EmailProtoService {
 	rpc SendResetPasswordEmail(ResetPasswordEmailRequest) returns (EmailResponse);
+	rpc SendAccountVerificationEmail(AccountVerificationEmailRequest) returns (EmailResponse);
 	rpc SendCustomEmail(CustomEmailRequest) returns (EmailResponse);
 }
 
 message ResetPasswordEmailRequest {
 	string Email = 1;
 	string Token = 2;
+	string Username = 3;
+}
+
+message AccountVerificationEmailRequest {
+	string Email = 1;
+	string Token = 2;
+	string Code = 3;
+	string Username = 4;
 }
 
 message CustomEmailRequest {
