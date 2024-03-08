@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "DiscordClone.EmailService.Domain";
+
+package email;
+
+service EmailProtoService {
+	rpc SendResetPasswordEmail(ResetPasswordEmailRequest) returns (EmailResponse);
+	rpc SendCustomEmail(CustomEmailRequest) returns (EmailResponse);
+}
+
+message ResetPasswordEmailRequest {
+	string Email = 1;
+	string Token = 2;
+}
+
+message CustomEmailRequest {
+	string Email = 1;
+	string Subject = 2;
+	string Body = 3;
+}
+
+message EmailResponse {
+	string Message = 1;
+	bool Success = 2;
+}
