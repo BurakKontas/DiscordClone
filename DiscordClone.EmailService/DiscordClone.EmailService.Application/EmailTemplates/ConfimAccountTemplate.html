@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Reset</title>
+    <title>Confirm Registration</title>
     <style>
         /* Basic CSS styling */
         body {
@@ -46,9 +46,10 @@
 </head>
 <body>
     <div class="container">
-        <h2>Password Reset</h2>
-        <p>Dear {{USERNAME}} <br />You have requested to reset your password. Click the button below to proceed:</p>
-        <a href="{{RESET_PASSWORD_LINK}}" class="button">Reset Password</a>
+        <h2>Confirm Registration</h2>
+        <p>Dear {{USERNAME}} <br />Please click the button below to confirm your email:</p>
+        <a href={{CONFIRMATION_LINK}} class="button">Confirm Email</a>
+        <p>{{CONFIRMATION_LINK}}</p>
     </div>
 </body>
 </html>

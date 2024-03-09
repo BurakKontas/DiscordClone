@@ -24,7 +24,7 @@ message AccountVerificationEmailRequest {
 }
 
 message CustomEmailRequest {
-	string Email = 1;
+	repeated string Email = 1;
 	string Subject = 2;
 	string Body = 3;
 }
