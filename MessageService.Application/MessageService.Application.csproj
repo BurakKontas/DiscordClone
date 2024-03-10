@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Protos\**" />
+    <Content Remove="Protos\**" />
+    <EmbeddedResource Remove="Protos\**" />
+    <None Remove="Protos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.MongoDB.Driver" Version="8.0.0-preview.3.24105.21" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.61.0" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Discord.ServiceDefaults\Discord.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\MessageService.DataAccess\MessageService.DataAccess.csproj" />
+    <ProjectReference Include="..\MessageService.Domain\MessageService.Domain.csproj" />
+    <ProjectReference Include="..\MessageService.Infrastructure\MessageService.Infrastructure.csproj" />
+    <ProjectReference Include="..\MessageService.Service\MessageService.Service.csproj" />
+  </ItemGroup>
+
+</Project>

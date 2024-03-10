@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+option csharp_namespace = "CenteralService.Domain";
+
+package authproto;
+
+service AuthenticationProtoService {
+    rpc ValidateToken(TokenValidationRequest) returns (TokenValidationResponse) {}
+    rpc RefreshToken(RefreshTokenRequest) returns (LoginResponse) {}
+    rpc Login(LoginRequest) returns (LoginResponse) {}
+    rpc Register(RegisterRequest) returns (RegisterResponse) {}
+    rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse) {}
+    rpc BanUser(BanUserRequest) returns (BanUserResponse) {}
+    rpc UnbanUser(UnbanUserRequest) returns (UnbanUserResponse) {}
+    rpc ExtractToken(ExtractTokenRequest) returns (ExtractTokenResponse) {}
+}
+
+message TokenRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message TokenResponse {
+    string access_token = 1;
+    string refresh_token = 2;
+    int32 expires_in = 3;
+    int32 refresh_expires_in = 4;
+}
+
+message TokenValidationRequest {
+    string token = 1;
+}
+
+message TokenValidationResponse {
+    bool is_valid = 1;
+    string email = 2;
+    int32 expires_in = 3;
+}
+
+message RefreshTokenRequest {
+    string refresh_token = 1;
+}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    string access_token = 1;
+    string refresh_token = 2;
+    int32 expires_in = 3;
+}
+
+message RegisterRequest {
+    string email = 1;
+    string username = 2;
+    string password = 3;
+}
+
+message RegisterResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ForgotPasswordRequest {
+    string email = 1;
+}
+
+message ForgotPasswordResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message BanUserRequest {
+    string user_uuid = 1;
+    string admin_uuid = 2;
+    string ban_reason = 3;
+}
+
+message BanUserResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message UnbanUserRequest {
+    string user_uuid = 1;
+}
+
+message UnbanUserResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ExtractTokenRequest {
+	string token = 1;
+}
+
+message ExtractTokenResponse {
+	string email = 1;
+    int32 role_id = 2;
+    string role = 3;
+    string user_uuid = 4;
+    string username = 5;
+}

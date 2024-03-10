@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<None Update="Protos\auth.proto">
+			<GrpcServices>Server</GrpcServices>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0-preview.2.23619.3" />
+		<PackageReference Include="Grpc.AspNetCore" Version="2.61.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="Protos\auth.proto" GrpcServices="Server" />
+	</ItemGroup>
+
+
+</Project>

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CenteralService.DataAccess\CenteralService.DataAccess.csproj" />
+    <ProjectReference Include="..\CenteralService.Domain\CenteralService.Domain.csproj" />
+    <ProjectReference Include="..\CenteralService.Infrastructure\CenteralService.Infrastructure.csproj" />
+    <ProjectReference Include="..\CenteralService.Service\CenteralService.Service.csproj" />
+    <ProjectReference Include="..\Discord.ServiceDefaults\Discord.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+</Project>

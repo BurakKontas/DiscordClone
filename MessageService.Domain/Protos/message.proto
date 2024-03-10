@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+option csharp_namespace = "MessageService.Domain";
+
+package messageproto;
+
+service MessageProtoService {
+  rpc AddMessage (AddMessageRequest) returns (AddMessageReply);
+  rpc DeleteMessage (DeleteMessageRequest) returns (DeleteMessageReply);
+  rpc UpdateMessage (UpdateMessageRequest) returns (UpdateMessageReply);
+  rpc GetMessage (GetMessageRequest) returns (GetMessageReply);
+  rpc GetMessages (GetMessagesRequest) returns (GetMessagesReply);
+  rpc GetMessagesByUser (GetMessagesByUserRequest) returns (GetMessagesByUserReply);
+  rpc GetMessagesByChannel (GetMessagesByChannelRequest) returns (GetMessagesByChannelReply);
+  rpc GetMessagesByChannelAndTimeRange (GetMessagesByChannelAndTimeRangeRequest) returns (GetMessagesByChannelAndTimeRangeReply);
+}
+
+message AddMessageRequest {
+  string content = 1;
+  string userId = 2;
+  string channelId = 3;
+}
+
+message AddMessageReply {
+  MessageProto message = 1;
+}
+
+message DeleteMessageRequest {
+  string messageId = 1;
+}
+
+message DeleteMessageReply {
+  string messageId = 1;
+  bool isSuccess = 2;
+}
+
+message UpdateMessageRequest {
+  string messageId = 1;
+  string userId = 2;
+  string content = 3;
+}
+
+message UpdateMessageReply {
+  MessageProto message = 1;
+}
+
+message GetMessageRequest {
+  string messageId = 1;
+}
+
+message GetMessageReply {
+  MessageProto message = 1;
+}
+
+message GetMessagesRequest {}
+
+message GetMessagesReply {
+  repeated MessageProto messages = 1;
+}
+
+message GetMessagesByUserRequest {
+  string userId = 1;
+}
+
+message GetMessagesByUserReply {
+  repeated MessageProto messages = 1;
+}
+
+message GetMessagesByChannelRequest {
+  string channelId = 1;
+}
+
+message GetMessagesByChannelReply {
+  repeated MessageProto messages = 1;
+}
+
+message GetMessagesByChannelAndTimeRangeRequest {
+  string channelId = 1;
+  string startTime = 2;
+  string endTime = 3;
+}
+
+message GetMessagesByChannelAndTimeRangeReply {
+  repeated MessageProto messages = 1;
+}
+
+message MessageProto {
+  string messageId = 1;
+  string content = 2;
+  string userId = 3;
+  string channelId = 4;
+  string createdAt = 5;
+  string updatedAt = 6;
+}

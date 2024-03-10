@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Protos\**" />
+    <Content Remove="Protos\**" />
+    <EmbeddedResource Remove="Protos\**" />
+    <None Remove="Protos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Asp.Versioning.Http" Version="7.1.0" />
+	  <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="7.1.0" />
+	  <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0-preview.3.24105.21" />
+	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.61.0" />
+    <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.61.0" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AuthService.DataAccess\AuthService.DataAccess.csproj" />
+    <ProjectReference Include="..\AuthService.Domain\AuthService.Domain.csproj" />
+    <ProjectReference Include="..\AuthService.Infrastructure\AuthService.Infrastructure.csproj" />
+    <ProjectReference Include="..\AuthService.Service\AuthService.Service.csproj" />
+    <ProjectReference Include="..\Discord.ServiceDefaults\Discord.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+</Project>
