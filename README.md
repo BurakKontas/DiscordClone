@@ -65,7 +65,7 @@ Communication between services is facilitated via gRPC, while the CenterService 
 
 Internal communication between services is done via gRPC. Each service defines its own protocol buffers (protobuf) messages and RPC methods for communication.
 
-Check proto files in Protos folder of each microservices service layer for gRPC service details.
+Check proto files in Protos folder of each microservices domain layer for gRPC service details.
 
 ## Contributing
 
