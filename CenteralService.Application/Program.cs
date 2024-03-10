@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
-
 var ports = builder.Configuration["ASPNETCORE_URLS"]!.Split(";").Select(x => new Uri(x)).ToList();
 var https_port = ports[^2].Port;
 var http_port = ports[^1].Port;
@@ -76,6 +75,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.MapGrpcReflectionService();
 }
 
 app.UseHttpsRedirection();
@@ -84,12 +84,18 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseCors(builder =>
+{
+    builder.AllowAnyHeader();
+    builder.AllowAnyMethod();
+    builder.WithOrigins("localhost", "::1", "127.0.0.1");
+});
+
 app.MapDefaultEndpoints();
 
-app.MapGrpcService<MessageProtoController>();
-app.MapGrpcService<AuthProtoController>();
-app.MapGrpcService<EmailProtoController>();
+app.MapGrpcService<MessageProtoController>().RequireCors();
+app.MapGrpcService<AuthProtoController>().RequireCors();
+app.MapGrpcService<EmailProtoController>().RequireCors();
 
-app.MapGrpcReflectionService();
 
 app.Run();

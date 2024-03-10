@@ -24,8 +24,20 @@ builder.Services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(ErrorHandling
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    app.MapGrpcReflectionService();
+}
+
+app.UseCors(builder =>
+{
+    builder.AllowAnyHeader();
+    builder.AllowAnyMethod();
+    builder.WithOrigins("localhost", "::1", "127.0.0.1");
+});
+
 // Configure the HTTP request pipeline.
-app.MapGrpcService<EmailController>();
+app.MapGrpcService<EmailController>().RequireCors();
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
 app.MapDefaultEndpoints();
