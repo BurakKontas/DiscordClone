@@ -6,7 +6,9 @@ var postgres = builder.AddPostgres("postgres")
 
 var message_mongodb = builder.AddMongoDB("message_mongodb");
 
-var centeral = builder.AddProject<Projects.CenteralService_Application>("centeral");
+var centeral = builder.AddProject<Projects.CenteralService_Application>("centeral")
+                      .AsHttp2Service()
+                      .WithEndpoint(name: "grpc_port", hostPort: 5006);
 
 var auth = builder.AddProject<Projects.AuthService_Application>("authentication")
                   .AsHttp2Service()
@@ -24,8 +26,6 @@ var message = builder.AddProject<Projects.MessageService_Application>("message")
 
 centeral.WithReference(auth)
         .WithReference(email)
-        .WithReference(message)
-        .AsHttp2Service()
-        .WithEndpoint(name: "grpc_port", hostPort: 5006);
+        .WithReference(message);
 
 builder.Build().Run();
