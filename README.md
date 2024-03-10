@@ -45,11 +45,14 @@ Communication between services is facilitated via gRPC, while the CenterService 
   - `GET /message/getmessagesbydate`: Get messages by date.
 
 - **Authentication**:
-  - `POST /auth/login`: Generate a token by providing username and password.
-  - `POST /auth/register`: Register a new user.
-  - `POST /auth/forgotpassword`: Reset users password.
-  - `POST /auth/validate`: Validate a token.
-  - `POST /auth/refresh`: Refresh a token.
+  - `POST /auth/validatetoken`: Validates a token.
+  - `POST /auth/banuser`: Bans a user.
+  - `POST /auth/unbanuser`: Unbans a user.
+  - `POST /auth/register`: Registers a new user.
+  - `POST /auth/login`: Logs in a user.
+  - `POST /auth/forgotpassword`: Initiates the process for resetting a password.
+  - `POST /auth/refreshtoken`: Refreshes a token.
+  - `POST /auth/extracttoken`: Extracts a token.
 
 ### gRPC Communication
 
