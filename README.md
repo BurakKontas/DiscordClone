@@ -9,6 +9,7 @@ This project aims to create a backend system for a Discord-like application usin
 - **CenterService**: The central service responsible for routing requests and orchestrating communication between other services.
 - **MessageService**: A service handling message-related functionalities. Utilizes Elasticsearch as the database.
 - **AuthService**: A service responsible for user authentication and authorization.
+- **EmailService**: A service responsible for sending emails to various users.
 
 ### Communication
 
@@ -18,15 +19,16 @@ Communication between services is facilitated via gRPC, while the CenterService 
 
 ### Prerequisites
 
-- .NET Core SDK
+- .NET Core SDK (Min. Version 8)
 - Docker (optional, for running Elasticsearch)
+- Visual Studio (Min. Version 17.9)
+- .NET Aspire
 
 ### Steps
 
 1. Clone this repository.
-2. Navigate to each service directory (`CenterService`, `MessageService`, `AuthService`) and run `dotnet build` to build the projects.
-3. Optionally, set up and run Elasticsearch for the `MessageService`.
-4. Start each service using `dotnet run` or by running the Docker containers (if configured).
+2. Navigate to `Discord.AppHost` and run `dotnet build` to build the projects.
+3. Start `Discord.AppHost` service using `dotnet run` or by running the Docker containers (if configured).
 
 ## Usage
 
