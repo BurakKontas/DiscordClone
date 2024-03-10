@@ -34,7 +34,7 @@ Communication between services is facilitated via gRPC, while the CenterService 
 
 #### CenterService
 
-- **Messages**: 
+- **Messages**:
   - `POST /message/addmessage`: Add a new message.
   - `GET /message/getmessages`: Get all messages.
   - `GET /message/getmessage`: Get a specific message by ID.
@@ -54,7 +54,7 @@ Communication between services is facilitated via gRPC, while the CenterService 
   - `POST /auth/refreshtoken`: Refreshes a token.
   - `POST /auth/extracttoken`: Extracts a token.
 
-- **Email**
+- **Email**:
   - `POST /email/sendaccountverificationemail`: Sends account verification email.
   - `POST /email/sendresetpasswordemail`: Sends password reset email.
   - `POST /email/sendcustomemail`: Sends custom email with body and subject to one or multiple mail address.
