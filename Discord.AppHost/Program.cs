@@ -1,17 +1,17 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
 var postgres = builder.AddPostgres("postgres")
-                        .WithPgAdmin()
-                        .AddDatabase("Auth");
+                      .WithPgAdmin()
+                      .AddDatabase("Auth");
 
 var message_mongodb = builder.AddMongoDB("message_mongodb");
 
 var centeral = builder.AddProject<Projects.CenteralService_Application>("centeral");
 
 var auth = builder.AddProject<Projects.AuthService_Application>("authentication")
-                   .AsHttp2Service()
-                   .WithReference(postgres)
-                   .WithReference(centeral);
+                  .AsHttp2Service()
+                  .WithReference(postgres)
+                  .WithReference(centeral);
 
 var email = builder.AddProject<Projects.EmailService_Application>("email")
                    .AsHttp2Service()
@@ -24,6 +24,8 @@ var message = builder.AddProject<Projects.MessageService_Application>("message")
 
 centeral.WithReference(auth)
         .WithReference(email)
-        .WithReference(message);
+        .WithReference(message)
+        .AsHttp2Service()
+        .WithEndpoint(name: "grpc_port", hostPort: 5006);
 
 builder.Build().Run();

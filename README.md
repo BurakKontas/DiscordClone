@@ -54,6 +54,11 @@ Communication between services is facilitated via gRPC, while the CenterService 
   - `POST /auth/refreshtoken`: Refreshes a token.
   - `POST /auth/extracttoken`: Extracts a token.
 
+- **Email**
+  - `POST /email/sendaccountverificationemail`: Sends account verification email.
+  - `POST /email/sendresetpasswordemail`: Sends password reset email.
+  - `POST /email/sendcustomemail`: Sends custom email with body and subject to one or multiple mail address.
+
 ### gRPC Communication
 
 Internal communication between services is done via gRPC. Each service defines its own protocol buffers (protobuf) messages and RPC methods for communication.

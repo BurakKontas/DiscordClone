@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option csharp_namespace = "CenteralService.Domain";
+
+package email;
+
+service EmailProtoService {
+	rpc SendResetPasswordEmail(ResetPasswordEmailRequest) returns (EmailResponse);
+	rpc SendAccountVerificationEmail(AccountVerificationEmailRequest) returns (EmailResponse);
+	rpc SendCustomEmail(CustomEmailRequest) returns (EmailResponse);
+}
+
+message ResetPasswordEmailRequest {
+	string Email = 1;
+	string Token = 2;
+	string Username = 3;
+}
+
+message AccountVerificationEmailRequest {
+	string Email = 1;
+	string Token = 2;
+	string Code = 3;
+	string Username = 4;
+}
+
+message CustomEmailRequest {
+	repeated string Email = 1;
+	string Subject = 2;
+	string Body = 3;
+}
+
+message EmailResponse {
+	string Message = 1;
+	bool Success = 2;
+}
