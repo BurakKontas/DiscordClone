@@ -68,6 +68,8 @@ builder.Services.AddHttpClient<AuthContext>(client => client.BaseAddress = new U
 builder.Services.AddHttpClient<MessageContext>(client => client.BaseAddress = new Uri(message_url));
 builder.Services.AddHttpClient<EmailContext>(client => client.BaseAddress = new Uri(email_url));
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
