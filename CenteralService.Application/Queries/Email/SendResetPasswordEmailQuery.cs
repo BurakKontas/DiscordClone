@@ -1,7 +1,7 @@
-﻿using EmailService.Domain;
+﻿using CenteralService.Domain;
 using MediatR;
 
-namespace EmailService.Application.Queries
+namespace CenteralService.Application.Queries
 {
     public record SendResetPasswordEmailQuery(ResetPasswordEmailRequest Request) : IRequest<EmailResponse>;
 

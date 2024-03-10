@@ -32,7 +32,5 @@ namespace CenteralService.Application.Controllers
             var reply = await _mediator.Send(new SendResetPasswordEmailQuery(request));
             return Ok(reply);
         }
-
-
     }
 }
