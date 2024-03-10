@@ -10,23 +10,29 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-var urls = builder.Configuration["ASPNETCORE_URLS"]!.Split(";");
-var http_port = new Uri(urls[^1]).Port;
-var grpc_port = new Uri(urls[0]).Port;
+var ports = builder.Configuration["ASPNETCORE_URLS"]!.Split(";").Select(x => new Uri(x)).ToList();
+var https_port = ports[^2].Port;
+var http_port = ports[^1].Port;
+var grpc_port = int.Parse(builder.Configuration["ASPNETCORE_GRPC_PORT"]!);
 
-builder.WebHost.ConfigureKestrel((context, options) =>
+builder.WebHost.UseKestrel((context, options) =>
 {
     options.ListenAnyIP(http_port, listenOptions =>
     {
         listenOptions.Protocols = HttpProtocols.Http1;
-        //listenOptions.UseHttps();
+    });
+
+    options.ListenAnyIP(https_port, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1;
+        listenOptions.UseHttps();
     });
 
     options.ListenAnyIP(grpc_port, listenOptions =>
     {
         listenOptions.Protocols = HttpProtocols.Http2;
+        listenOptions.UseHttps(); //use this to enable TLS
     });
-
 });
 
 builder.Services.AddGrpc();
@@ -35,8 +41,10 @@ builder.Services.AddGrpcReflection();
 // Add services to the container.
 builder.Services.AddScoped<MessageContext>();
 builder.Services.AddScoped<AuthContext>();
+builder.Services.AddScoped<EmailContext>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddAuthorization();
 
 builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer");
@@ -55,9 +63,11 @@ builder.Services.AddSwaggerGen();
 
 var auth_url = builder.Configuration["Grpc:AuthenticationService"] ?? throw new Exception("Grpc:AuthenticationService is not set");
 var message_url = builder.Configuration["Grpc:MessageService"] ?? throw new Exception("Grpc:MessageService is not set");
+var email_url = builder.Configuration["Grpc:EmailService"] ?? throw new Exception("Grpc:EmailService is not set");
 
 builder.Services.AddHttpClient<AuthContext>(client => client.BaseAddress = new Uri(auth_url));
 builder.Services.AddHttpClient<MessageContext>(client => client.BaseAddress = new Uri(message_url));
+builder.Services.AddHttpClient<EmailContext>(client => client.BaseAddress = new Uri(email_url));
 
 var app = builder.Build();
 
@@ -76,8 +86,10 @@ app.MapControllers();
 
 app.MapDefaultEndpoints();
 
-app.MapGrpcService<MessageProtoController>(); // Örnek bir gRPC MessageService sınıfı
-app.MapGrpcService<AuthProtoController>(); // Örnek bir gRPC AuthService sınıfı
+app.MapGrpcService<MessageProtoController>();
+app.MapGrpcService<AuthProtoController>();
+app.MapGrpcService<EmailProtoController>();
+
 app.MapGrpcReflectionService();
 
 app.Run();
